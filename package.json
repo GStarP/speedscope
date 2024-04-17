@@ -16,7 +16,8 @@
     "coverage": "npm run jest -- --coverage",
     "typecheck": "tsc --noEmit",
     "test": "./scripts/ci.sh",
-    "serve": "parcel assets/index.html --open --no-autoinstall"
+    "serve": "parcel assets/index.html --open --no-autoinstall",
+    "build:win": "parcel build assets/index.html --no-cache --out-dir \"./dist/release\" --public-url \"./\" --detailed-report"
   },
   "files": [
     "bin/cli.js",
