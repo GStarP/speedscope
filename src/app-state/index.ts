@@ -11,8 +11,10 @@ export const flattenRecursionAtom = new Atom<boolean>(false, 'flattenRecursion')
 // An empty string indicates that the search is open by no filter is applied.
 // searchIsActive is stored separately, because we may choose to persist the
 // query even when the search input is closed.
-export const searchIsActiveAtom = new Atom<boolean>(false, 'searchIsActive')
+export const searchIsActiveAtom = new Atom<boolean>(true, 'searchIsActive')
 export const searchQueryAtom = new Atom<string>('', 'searchQueryAtom')
+export const searchFileAtom = new Atom<string>('', 'searchFileAtom')
+export const searchWeightAtom = new Atom<number>(0, 'searchWeightAtom')
 
 // Which top-level view should be displayed
 export const viewModeAtom = new Atom<ViewMode>(ViewMode.CHRONO_FLAME_CHART, 'viewMode')

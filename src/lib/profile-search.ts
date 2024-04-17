@@ -21,6 +21,9 @@ export enum FlamechartType {
 //
 // Return ranges for all matches in order to highlight them.
 export function exactMatchStrings(text: string, pattern: string): [number, number][] {
+  // ! empty string will cause infinite while
+  if (pattern === '') return []
+
   const lowerText = text.toLocaleLowerCase()
   const lowerPattern = pattern.toLocaleLowerCase()
 
@@ -42,6 +45,8 @@ export class ProfileSearchResults {
   constructor(
     readonly profile: Profile,
     readonly searchQuery: string,
+    readonly searchFile: string,
+    readonly searchWeight: number,
   ) {}
 
   private matches: Map<Frame, [number, number][] | null> | null = null
@@ -49,8 +54,17 @@ export class ProfileSearchResults {
     if (!this.matches) {
       this.matches = new Map()
       this.profile.forEachFrame(frame => {
-        const match = exactMatchStrings(frame.name, this.searchQuery)
-        this.matches!.set(frame, match.length === 0 ? null : match)
+        const nameMatch = exactMatchStrings(frame.name, this.searchQuery)
+        const fileMatch = exactMatchStrings(frame.file ?? '', this.searchFile)
+        const match =
+          frame.getTotalWeight() > this.searchWeight * 1000
+            ? nameMatch.length !== 0
+              ? nameMatch
+              : fileMatch.length !== 0
+                ? fileMatch
+                : null
+            : null
+        this.matches!.set(frame, match)
       })
     }
     return this.matches.get(frame) || null

@@ -12,6 +12,8 @@ import {viewModeAtom} from '../app-state'
 import {ProfileGroupState} from '../app-state/profile-group'
 import {colorSchemeAtom} from '../app-state/color-scheme'
 import {useAtom} from '../lib/atom'
+import FileSearchView from './search/file-search-view'
+import WeightSearchView from './search/weight-search-view'
 
 interface ToolbarProps extends ApplicationProps {
   browseForFile(): void
@@ -205,11 +207,29 @@ function ToolbarRightContent(props: ToolbarProps) {
 export function Toolbar(props: ToolbarProps) {
   const style = getStyle(useTheme())
   return (
-    <div className={css(style.toolbar)}>
-      <ToolbarLeftContent {...props} />
-      <ToolbarCenterContent {...props} />
-      <ToolbarRightContent {...props} />
-    </div>
+    <Fragment>
+      <div className={css(style.toolbar)}>
+        <ToolbarLeftContent {...props} />
+        <ToolbarCenterContent {...props} />
+        <ToolbarRightContent {...props} />
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          color: '#FFF',
+          backgroundColor: '#000',
+          boxSizing: 'border-box',
+          height: 24,
+          paddingTop: 4,
+          paddingBottom: 4,
+          paddingLeft: 4,
+          paddingRight: 4,
+        }}
+      >
+        <FileSearchView />
+        <WeightSearchView />
+      </div>
+    </Fragment>
   )
 }
 
