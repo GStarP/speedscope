@@ -79,7 +79,12 @@ export class FlamechartWrapper extends StatelessComponent<FlamechartViewProps> {
           theme={this.props.theme}
           selectedNode={null}
           onNodeHover={this.setNodeHover}
-          onNodeSelect={noop}
+          onNodeSelect={node => {
+            const file = node?.frame.file
+            if (file) {
+              navigator.clipboard.writeText(file)
+            }
+          }}
           configSpaceViewportRect={this.props.configSpaceViewportRect}
           setConfigSpaceViewportRect={this.setConfigSpaceViewportRect}
           transformViewport={this.transformViewport}
